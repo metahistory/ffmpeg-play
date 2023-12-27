@@ -4,6 +4,7 @@ import { Slider } from "@mui/material"
 import { timeFormat } from "./utils/timeFormat"
 import { InputFileMetadata } from "./types/inputFileMetadata"
 import { flagArgument } from "./utils/flagArgument"
+import { Label } from "./components/label/Label"
 
 export const App: FC = () => {
 
@@ -67,7 +68,7 @@ export const App: FC = () => {
             <h1 className="text-6xl font-mono font-bold">FFmpeg</h1>
 
             <section className="flex flex-col">
-               <span className="ml-0.5 font-mono text-xs">Input file:</span>
+               <Label name="Input file:" hint="Use -i flag to pass input filename." />
                <Input value={input} onChange={setInput} hint="movie.mp4" className="mt-1" />
 
                <label htmlFor="file" className="mt-2 bg-gray-50 border-2 border-t-0 border-dashed py-4 flex justify-center items-center">
@@ -89,12 +90,15 @@ export const App: FC = () => {
             </section>
 
             <section className="flex flex-col">
-               <span className="ml-0.5 font-mono text-xs">Output file:</span>
+               <Label name="Output file:" />
                <Input value={output} onChange={setOutput} className="mt-1" hint="output.avi" />
             </section>
 
             <section>
-               <span className="ml-0.5 font-mono text-xs">Trim:</span>
+               <Label
+                  name="Trim:"
+                  hint="Use -ss flag to move video start point. Use -to flag to move video end point."
+               />
                <div className="mt-2 flex justify-between">
                   <span className="font-mono text-xs">start: {timeFormat(trim.start)}</span>
                   <span className="font-mono text-xs">end: {timeFormat(trim.end)}</span>
@@ -110,7 +114,7 @@ export const App: FC = () => {
             </section>
 
             <section>
-               <span className="text-xs ml-0.5 font-mono">Command:</span>
+               <Label name="Command:" />
                <div className="mt-1 border-black border bg-gray-200 px-2 py-1 rounded">
                   {command}
                </div>
