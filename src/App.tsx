@@ -65,7 +65,7 @@ export const App: FC = () => {
 
    return (
       <div className="h-full flex">
-         <div className="m-auto flex flex-col">
+         <div className="m-auto flex flex-col w-full px-10 max-w-[640px]">
             <h1 className="text-6xl font-mono font-bold">FFmpeg</h1>
 
             <span className="mt-10 ml-0.5 font-mono text-xs">Input file:</span>
