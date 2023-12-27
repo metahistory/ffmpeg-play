@@ -10,10 +10,7 @@ export const App: FC = () => {
    const [input, setInput] = useState("")
    const [output, setOutput] = useState("")
 
-   const [metadata, setMetadata] = useState<InputFileMetadata>({
-      name: "movie.mp4",
-      duration: 3600,
-   })
+   const [metadata, setMetadata] = useState<InputFileMetadata>()
 
    const [trim, setTrim] = useState({ start: 0, end: 3600 })
 
@@ -49,6 +46,7 @@ export const App: FC = () => {
 
          setMetadata({ name, duration })
          setTrim({ start: 0, end: duration })
+         setInput(name)
       }
 
       video.src = URL.createObjectURL(file)
@@ -56,9 +54,9 @@ export const App: FC = () => {
 
    const command = [
 
-      `ffmpeg -i ${metadata?.name || input || "movie.mp4"}`,
+      `ffmpeg -i ${input || metadata?.name || "movie.mp4"}`,
       flagArgument("-ss", timeFormat(trim.start), trim.start > 0),
-      flagArgument("-to", timeFormat(trim.end), trim.end < (metadata?.duration || 0)),
+      flagArgument("-to", timeFormat(trim.end), trim.end < (metadata?.duration || 3600)),
       output || "output.avi",
 
    ].join(" ").replace(/\s{2,}/g, " ")
@@ -71,8 +69,8 @@ export const App: FC = () => {
             <span className="mt-10 ml-0.5 font-mono text-xs">Input file:</span>
             <Input value={input} onChange={setInput} hint="movie.mp4" className="mt-1" />
 
-            <label htmlFor="file" className="mt-2 border-2 border-t-0 border-dashed py-4 flex justify-center items-center">
-               <span className="text-sm text-gray-400 font-mono text-center">
+            <label htmlFor="file" className="mt-2 bg-gray-50 border-2 border-t-0 border-dashed py-4 flex justify-center items-center">
+               <span className="text-sm text-gray-500 font-mono text-center">
                   {metadata ? (
                      <>{metadata.name} <br /> {timeFormat(metadata.duration)} </>
                   ) : (
@@ -93,7 +91,7 @@ export const App: FC = () => {
             <Slider
                step={0.01}
                min={0}
-               max={metadata?.duration}
+               max={metadata?.duration || 3600}
                value={[trim.start, trim.end]}
                onChange={handleSliderChange}
                disableSwap
