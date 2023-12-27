@@ -63,43 +63,53 @@ export const App: FC = () => {
 
    return (
       <div className="h-full flex">
-         <div className="m-auto flex flex-col w-full px-10 max-w-[640px]">
+         <div className="m-auto flex flex-col w-full px-10 max-w-[640px] space-y-8">
             <h1 className="text-6xl font-mono font-bold">FFmpeg</h1>
 
-            <span className="mt-10 ml-0.5 font-mono text-xs">Input file:</span>
-            <Input value={input} onChange={setInput} hint="movie.mp4" className="mt-1" />
+            <section className="flex flex-col">
+               <span className="ml-0.5 font-mono text-xs">Input file:</span>
+               <Input value={input} onChange={setInput} hint="movie.mp4" className="mt-1" />
 
-            <label htmlFor="file" className="mt-2 bg-gray-50 border-2 border-t-0 border-dashed py-4 flex justify-center items-center">
-               <span className="text-sm text-gray-500 font-mono text-center">
-                  {metadata ? (
-                     <>{metadata.name} <br /> {timeFormat(metadata.duration)} </>
-                  ) : (
-                     <>click here to choose <span className="text-orange-300">file</span></>
-                  )}
-               </span>
-            </label>
-            <input onChange={handleChooseFile} type="file" id="file" hidden />
+               <label htmlFor="file" className="mt-2 bg-gray-50 border-2 border-t-0 border-dashed py-4 flex justify-center items-center">
+                  <span className="text-sm text-gray-500 font-mono text-center">
+                     {metadata ? (
+                        <>{metadata.name} <br /> {timeFormat(metadata.duration)} </>
+                     ) : (
+                        <>click here to choose <span className="text-orange-300">file</span></>
+                     )}
+                  </span>
+               </label>
+               <input onChange={handleChooseFile} type="file" id="file" hidden />
+            </section>
 
-            <span className="mt-6 ml-0.5 font-mono text-xs">Output file:</span>
-            <Input value={output} onChange={setOutput} className="mt-1" hint="output.avi" />
+            <section className="flex flex-col">
+               <span className="ml-0.5 font-mono text-xs">Output file:</span>
+               <Input value={output} onChange={setOutput} className="mt-1" hint="output.avi" />
+            </section>
 
-            <span className="mt-6 ml-0.5 font-mono text-xs">Trim:</span>
-            <div className="mt-2 flex justify-between">
-               <span className="font-mono text-xs">start: {timeFormat(trim.start)}</span>
-               <span className="font-mono text-xs">end: {timeFormat(trim.end)}</span>
-            </div>
-            <Slider
-               step={0.01}
-               min={0}
-               max={metadata?.duration || 3600}
-               value={[trim.start, trim.end]}
-               onChange={handleSliderChange}
-               disableSwap
-            />
-            <span className="mt-12 text-xs ml-0.5 font-mono">Command:</span>
-            <div className="mt-1 border-black border bg-gray-200 px-2 py-1 rounded">
-               {command}
-            </div>
+            <section>
+               <span className="ml-0.5 font-mono text-xs">Trim:</span>
+               <div className="mt-2 flex justify-between">
+                  <span className="font-mono text-xs">start: {timeFormat(trim.start)}</span>
+                  <span className="font-mono text-xs">end: {timeFormat(trim.end)}</span>
+               </div>
+               <Slider
+                  step={0.01}
+                  min={0}
+                  max={metadata?.duration || 3600}
+                  value={[trim.start, trim.end]}
+                  onChange={handleSliderChange}
+                  disableSwap
+               />
+            </section>
+
+            <section>
+               <span className="text-xs ml-0.5 font-mono">Command:</span>
+               <div className="mt-1 border-black border bg-gray-200 px-2 py-1 rounded">
+                  {command}
+               </div>
+            </section>
+
          </div>
       </div>
    )
