@@ -79,7 +79,13 @@ export const App: FC = () => {
                      )}
                   </span>
                </label>
-               <input onChange={handleChooseFile} type="file" id="file" hidden />
+               <input
+                  onChange={handleChooseFile}
+                  type="file"
+                  id="file"
+                  hidden
+                  accept="video/mp4,video/x-m4v,video/*"
+               />
             </section>
 
             <section className="flex flex-col">
